@@ -1,5 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton
 import sys
+from qt_material import apply_stylesheet
 from datetime import datetime
 
 class AgeCalculator(QWidget):
@@ -7,6 +8,7 @@ class AgeCalculator(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Age Calculator")
+        self.setMinimumSize(500, 250)
         grid = QGridLayout()
 
         name_label = QLabel("Name:")
@@ -54,6 +56,7 @@ class AgeCalculator(QWidget):
             self.output_label.setText("Please enter a valid Date of Birth")
 
 app = QApplication(sys.argv)
+apply_stylesheet(app, theme='dark_teal.xml')
 age_calculator = AgeCalculator()
 age_calculator.show()
 sys.exit(app.exec())
