@@ -51,6 +51,14 @@ class AgeCalculator(QWidget):
 
             day = current_day - birth_day
 
+            if day < 0:
+                month = month - 1
+                day = day + 30
+
+            if month < 0:
+                age = age - 1
+                month = month + 12
+
             self.output_label.setText(f"{self.name_line_edit.text()} is {age} years, {month} months , {day} days old. ")
         except ValueError:
             self.output_label.setText("Please enter a valid Date of Birth")
@@ -60,4 +68,5 @@ apply_stylesheet(app, theme='dark_teal.xml')
 age_calculator = AgeCalculator()
 age_calculator.show()
 sys.exit(app.exec())
+
 
