@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QGridLayout, QLineEdit, QPushButton
 import sys
-
+from datetime import datetime
 
 class AgeCalculator(QWidget):
 
@@ -16,6 +16,7 @@ class AgeCalculator(QWidget):
         self.date_birth_line_edit = QLineEdit()
 
         calculate_button = QPushButton("Calculate Age")
+        calculate_button.clicked.connect(self.calculate_age)
         self.output_label = QLabel("")
 
         grid.addWidget(name_label, 0, 0)
@@ -28,8 +29,32 @@ class AgeCalculator(QWidget):
 
         self.setLayout(grid)
 
+    def calculate_age(self):
+        try:
+            current_year = datetime.now().year
+            date_of_birth = self.date_birth_line_edit.text()
+            year_of_birth = datetime.strptime(date_of_birth, "%d/%m/%Y").date().year
+
+            age = current_year - year_of_birth
+
+            current_month = datetime.now().month
+            date_of_month= self.date_birth_line_edit.text()
+            month_of_birth = datetime.strptime(date_of_month, "%d/%m/%Y").date().month
+
+            month = current_month - month_of_birth
+
+            current_day = datetime.now().day
+            day_of_birth = self.date_birth_line_edit.text()
+            birth_day = datetime.strptime(day_of_birth, "%d/%m/%Y").date().day
+
+            day = current_day - birth_day
+
+            self.output_label.setText(f"{self.name_line_edit.text()} is {age} years, {month} months , {day} days old. ")
+        except ValueError:
+            self.output_label.setText("Please enter a valid Date of Birth")
 
 app = QApplication(sys.argv)
 age_calculator = AgeCalculator()
 age_calculator.show()
 sys.exit(app.exec())
+
